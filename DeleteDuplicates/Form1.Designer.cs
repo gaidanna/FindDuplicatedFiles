@@ -125,7 +125,7 @@
             // 
             this.buttonDelete.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonDelete.Enabled = false;
-            this.buttonDelete.Location = new System.Drawing.Point(222, 309);
+            this.buttonDelete.Location = new System.Drawing.Point(224, 309);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 32);
             this.buttonDelete.TabIndex = 9;
@@ -133,7 +133,7 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.OnDeleteButtonClick);
             // 
-            // checkedListBoxForResult
+            // ResultCheckedListBox
             // 
             this.ResultCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -142,8 +142,8 @@
             this.ResultCheckedListBox.HorizontalScrollbar = true;
             this.ResultCheckedListBox.IntegralHeight = false;
             this.ResultCheckedListBox.Location = new System.Drawing.Point(4, 201);
-            this.ResultCheckedListBox.Name = "checkedListBoxForResult";
-            this.ResultCheckedListBox.Size = new System.Drawing.Size(361, 102);
+            this.ResultCheckedListBox.Name = "ResultCheckedListBox";
+            this.ResultCheckedListBox.Size = new System.Drawing.Size(365, 102);
             this.ResultCheckedListBox.TabIndex = 11;
             this.ResultCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnItemCheck);
             this.ResultCheckedListBox.DoubleClick += new System.EventHandler(this.OntemDoubleClick);
@@ -152,7 +152,7 @@
             // 
             this.buttonSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonSelectAll.Enabled = false;
-            this.buttonSelectAll.Location = new System.Drawing.Point(141, 309);
+            this.buttonSelectAll.Location = new System.Drawing.Point(143, 309);
             this.buttonSelectAll.Name = "buttonSelectAll";
             this.buttonSelectAll.Size = new System.Drawing.Size(75, 32);
             this.buttonSelectAll.TabIndex = 12;
@@ -164,7 +164,7 @@
             // 
             this.buttonselectNone.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonselectNone.Enabled = false;
-            this.buttonselectNone.Location = new System.Drawing.Point(60, 309);
+            this.buttonselectNone.Location = new System.Drawing.Point(62, 309);
             this.buttonselectNone.Name = "buttonselectNone";
             this.buttonselectNone.Size = new System.Drawing.Size(75, 32);
             this.buttonselectNone.TabIndex = 13;
@@ -172,12 +172,12 @@
             this.buttonselectNone.UseVisualStyleBackColor = true;
             this.buttonselectNone.Click += new System.EventHandler(this.OnSelectNoneButtonClick);
             // 
-            // progressBar1
+            // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(12, 434);
-            this.progressBar.Name = "progressBar1";
+            this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(715, 23);
             this.progressBar.TabIndex = 14;
             // 
@@ -209,7 +209,7 @@
             this.listBox1.IntegralHeight = false;
             this.listBox1.Location = new System.Drawing.Point(6, 21);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(361, 136);
+            this.listBox1.Size = new System.Drawing.Size(365, 136);
             this.listBox1.TabIndex = 16;
             this.listBox1.SelectedValueChanged += new System.EventHandler(this.OnSelectedValueChanged);
             // 
@@ -260,7 +260,7 @@
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.splitContainer1.Size = new System.Drawing.Size(715, 344);
-            this.splitContainer1.SplitterDistance = 374;
+            this.splitContainer1.SplitterDistance = 378;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 22;
             // 
@@ -268,7 +268,7 @@
             // 
             this.buttonPrevious.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonPrevious.Enabled = false;
-            this.buttonPrevious.Location = new System.Drawing.Point(183, 163);
+            this.buttonPrevious.Location = new System.Drawing.Point(185, 163);
             this.buttonPrevious.Name = "buttonPrevious";
             this.buttonPrevious.Size = new System.Drawing.Size(75, 32);
             this.buttonPrevious.TabIndex = 18;
@@ -280,7 +280,7 @@
             // 
             this.buttonNext.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonNext.Enabled = false;
-            this.buttonNext.Location = new System.Drawing.Point(102, 163);
+            this.buttonNext.Location = new System.Drawing.Point(104, 163);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(75, 32);
             this.buttonNext.TabIndex = 17;

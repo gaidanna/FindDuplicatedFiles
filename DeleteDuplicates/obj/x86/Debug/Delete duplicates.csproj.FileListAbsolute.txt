@@ -63,3 +63,23 @@ C:\Users\Anna\ProjectsGitHub\FindDuplicates\FindDuplicates\Delete duplicates 23_
 C:\Users\Anna\ProjectsGitHub\FindDuplicates\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\determine optimal amount of BG for processing\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
 C:\Users\Anna\ProjectsGitHub\FindDuplicates\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\determine optimal amount of BG for processing\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
 C:\Users\Anna\ProjectsGitHub\FindDuplicates\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\determine optimal amount of BG for processing\obj\x86\Debug\Delete duplicates.csproj.GenerateResource.Cache
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\determine optimal amount of BG for processing\obj\x86\Debug\determine optimal amount of BG for processing.exe
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\determine optimal amount of BG for processing\obj\x86\Debug\determine optimal amount of BG for processing.pdb
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.exe
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.pdb
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\bin\Debug\determine optimal amount of BG for processing.exe
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\bin\Debug\determine optimal amount of BG for processing.pdb
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\Delete duplicates.csprojResolveAssemblyReference.cache
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\A\FindDuplicatedFiles\FindDuplicates\Delete duplicates 23_02_14\delete duplicate files\DeleteDuplicates\obj\x86\Debug\Delete duplicates.csproj.GenerateResource.Cache
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\delete duplicate files\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.exe
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\delete duplicate files\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.pdb
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.exe
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\determine optimal amount of BG for processing.pdb
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\bin\Debug\determine optimal amount of BG for processing.exe
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\bin\Debug\determine optimal amount of BG for processing.pdb
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\Delete duplicates.csprojResolveAssemblyReference.cache
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Anna\ProjectsGitHub\FindDuplicates\DeleteDuplicates\obj\x86\Debug\Delete duplicates.csproj.GenerateResource.Cache

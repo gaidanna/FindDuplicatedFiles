@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delete duplicates", "determine optimal amount of BG for processing\Delete duplicates.csproj", "{B3C96D9C-49F1-45AF-AA53-52EDC7833515}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delete duplicates", "DeleteDuplicates\Delete duplicates.csproj", "{B3C96D9C-49F1-45AF-AA53-52EDC7833515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
