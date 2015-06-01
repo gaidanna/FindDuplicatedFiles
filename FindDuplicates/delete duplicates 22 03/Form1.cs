@@ -25,9 +25,9 @@ namespace WindowsFormsApplication1
         BackgroundWorker bgWorker = new BackgroundWorker();
         List<PictureBox> pictureboxSet = new List<PictureBox>();
         List<CheckBox> checkboxSet = new List<CheckBox>();
-        Dictionary<ItemInformation, List<ItemInformation>> verifiedDuplicated = new Dictionary<ItemInformation, List<ItemInformation>>();
-        Dictionary<ItemInformation, List<ItemInformation>> unverifiedDuplicated = new Dictionary<ItemInformation, List<ItemInformation>>();
-        Dictionary<ItemInformation, List<ItemInformation>> duplicates = new Dictionary<ItemInformation, List<ItemInformation>>();
+        Dictionary<ItemInfo, List<ItemInfo>> verifiedDuplicated = new Dictionary<ItemInfo, List<ItemInfo>>();
+        Dictionary<ItemInfo, List<ItemInfo>> unverifiedDuplicated = new Dictionary<ItemInfo, List<ItemInfo>>();
+        Dictionary<ItemInfo, List<ItemInfo>> duplicates = new Dictionary<ItemInfo, List<ItemInfo>>();
 
         public const int BYTESTOREAD = sizeof(Int64);
         public const int INTERVAL = 2;
@@ -37,9 +37,9 @@ namespace WindowsFormsApplication1
         public const string NODUPLICATES = "No duplicates";
         public const string INVALIDPATH = "The path is invalid. Please specify the path to the folder.";
         public const string FILEPROCESSING = "Please wait. Files are being processed.";
-        public const string COMPLETEDPERCENTAGE = "Percentage completed - 100%";
+        public const string COMPLETEDPERCENTAGE = "100% completed";
         public readonly string[] STRINGSEPARATORS = new string[] { " - copy", " - копия", " (", "(" };
-        public readonly string[] PICTUREEXTENSIONS = new string[] { "*.bmp", "*.jpg", "*.jpeg", "*.gif", "*.png" };
+        public readonly string[] IMAGEEXTENSIONS = new string[] { "*.bmp", "*.jpg", "*.jpeg", "*.gif", "*.png" };
         public readonly Size size = new Size(300, 300);
 
         public Form1()
@@ -49,9 +49,9 @@ namespace WindowsFormsApplication1
             comboBox1.SelectedIndex = 0;
         }
 
-        public class ItemInformation
+        public class ItemInfo
         {
-            public ItemInformation(string fullname)
+            public ItemInfo(string fullname)
             {
                 FullPath = fullname;
             }
@@ -116,10 +116,10 @@ namespace WindowsFormsApplication1
                 try
                 {
                     image = BitmapFrame.Create(filestream);
-                    //Question: let's discuss the row below. Not clear for me
                     metadata = (BitmapMetadata)image.Metadata;
                     cameraModel = metadata.CameraModel;
                     dateTaken = metadata.DateTaken;
+
                     if (dateTaken != null && cameraModel != null)
                     {
                         return string.Concat(dateTaken, "_", cameraModel);
@@ -150,7 +150,12 @@ namespace WindowsFormsApplication1
             List<string> listOfParameters;
             string newPath;
 
-            checkedListBoxForResult.Items.Clear();
+            listOfParameters = new List<string>();
+            countUnverified = 0;
+            allFilesSize = 0;
+            newPath = textBoxForPath.Text;
+
+            ResultCheckedListBox.Items.Clear();
             textBoxForInfo.Clear();
             textBoxDuplicatesInfo.Clear();
             duplicates.Clear();
@@ -161,16 +166,11 @@ namespace WindowsFormsApplication1
             textBoxForInfo.BackColor = Color.White;
             textBoxDuplicatesInfo.BackColor = Color.White;
             textBoxForPath.BackColor = Color.White;
-            countUnverified = 0;
-            allFilesSize = 0;
 
             buttonNext.Enabled = false;
             buttonPrevious.Enabled = false;
             textBoxForInfo.Enabled = false;
             textBoxDuplicatesInfo.Enabled = false;
-
-            listOfParameters = new List<string>();
-            newPath = textBoxForPath.Text;
 
             if (pictureboxSet.Count > 0)
             {
@@ -178,6 +178,7 @@ namespace WindowsFormsApplication1
                 {
                     picture.Image.Dispose();
                 }
+
                 pictureboxSet.Clear();
                 splitContainer1.Panel2.Controls.Clear();
             }
@@ -198,8 +199,8 @@ namespace WindowsFormsApplication1
                 buttonselectNone.Enabled = false;
                 textBoxForPath.Enabled = false;
 
-                listOfParameters.Add(newPath);
                 labelForPercentage.Text = FILEPROCESSING;
+                listOfParameters.Add(newPath);
                 listOfParameters.AddRange(split);
                 bgWorker.RunWorkerAsync(listOfParameters);
             }
@@ -211,22 +212,21 @@ namespace WindowsFormsApplication1
             string mainPath;
             int percent;
             int filecount;
-            //int updatedcount;
             TimeSpan ts;
             List<string> folderPathes;
             FileInfo[] arrayOfFiles;
             List<string> listOfFullPathes;
-            List<ItemInformation> listAllFiles;
+            List<ItemInfo> listAllFiles;
             DirectoryInfo Subdirectory;
-            ItemInformation iteminfo;
+            ItemInfo iteminfo;
+            List<string> parameters;
 
             folderPathes = new List<string>();
             listOfFullPathes = new List<string>();
-            listAllFiles = new List<ItemInformation>();
+            listAllFiles = new List<ItemInfo>();
             percent = 0;
             filecount = 0;
-
-            List<string> parameters = (List<string>)e.Argument;
+            parameters = (List<string>)e.Argument;
             mainPath = parameters[0];
             parameters.RemoveAt(0);
 
@@ -237,6 +237,7 @@ namespace WindowsFormsApplication1
             foreach (string subfolder in folderPathes)
             {
                 Subdirectory = new DirectoryInfo(subfolder);
+
                 foreach (string param in parameters)
                 {
                     if (bgWorker.CancellationPending == true)
@@ -268,21 +269,19 @@ namespace WindowsFormsApplication1
                     else
                     {
                         extension = Path.GetExtension(listOfFullPathes[x]).ToLower();
-                        iteminfo = new ItemInformation(listOfFullPathes[x]);
+                        iteminfo = new ItemInfo(listOfFullPathes[x]);
                         iteminfo.AttributeCount = (x + 1);
                         iteminfo.FileSize = new FileInfo(listOfFullPathes[x]).Length;
                         iteminfo.FileName = GetShortName(listOfFullPathes[x]);
 
-                        if (extension.Equals(PICTUREEXTENSIONS[1]) || extension.Equals(PICTUREEXTENSIONS[2]))
+                        if (extension.Equals(IMAGEEXTENSIONS[1]) || extension.Equals(IMAGEEXTENSIONS[2]))
                         {
-                            //!!
                             iteminfo.CameraAndDateTaken = GetDate(listOfFullPathes[x]);
                         }
                         listAllFiles.Add(iteminfo);
                     }
                     filecount++;
                     percent = PercentageReportProgress(listOfFullPathes.Count, percent, ref filecount);
-                    //filecount = updatedcount;
                 }
 
                 duplicates = IdentifyDuplicates(listAllFiles, e);
@@ -294,7 +293,7 @@ namespace WindowsFormsApplication1
                 }
                 else
                 {
-                    foreach (KeyValuePair<ItemInformation, List<ItemInformation>> kvp in duplicates)
+                    foreach (KeyValuePair<ItemInfo, List<ItemInfo>> kvp in duplicates)
                     {
                         bgWorker.ReportProgress(0, kvp.Key.FullPath);
                     }
@@ -310,22 +309,19 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Dictionary<ItemInformation, List<ItemInformation>> IdentifyDuplicates(List<ItemInformation> filesList, DoWorkEventArgs e)
+        public Dictionary<ItemInfo, List<ItemInfo>> IdentifyDuplicates(List<ItemInfo> filesList, DoWorkEventArgs e)
         {
-            ItemInformation currentitem;
-            ItemInformation nullItem;
-            //string name;
-            //long size;
+            ItemInfo currentitem;
+            ItemInfo nullItem;
             string date;
-            List<ItemInformation> items;
+            List<ItemInfo> items;
             int filesAmount;
             int processedPercentage;
-            //int updatedcount;
             int verifiedItemsCount;
             int unverifiedItemsCount;
             int filesListCount;
 
-            nullItem = new ItemInformation(null);
+            nullItem = new ItemInfo(null);
             filesAmount = 0;
             processedPercentage = 0;
             countUnverified = 0;
@@ -335,8 +331,6 @@ namespace WindowsFormsApplication1
 
             for (int b = 0; b < filesListCount; b++)
             {
-                //name = filesList[b].FileName;
-                //size = filesList[b].FileSize;
                 date = filesList[b].CameraAndDateTaken;
 
                 currentitem = filesList[b];
@@ -362,19 +356,19 @@ namespace WindowsFormsApplication1
                             {
                                 if (currentitem.CameraAndDateTaken != null && currentitem.CameraAndDateTaken == items[a].CameraAndDateTaken)
                                 {
-                                    verifiedDuplicated = AddValueToDictionary(verifiedDuplicated, currentitem, items[a], verifiedItemsCount, out verifiedItemsCount);
+                                    verifiedDuplicated = AddToDictionary(verifiedDuplicated, currentitem, items[a], verifiedItemsCount, out verifiedItemsCount);
                                     duplicatesAmount++;
                                     allFilesSize += items[a].FileSize;
                                 }
                                 else
                                 {
-                                    unverifiedDuplicated = AddValueToDictionary(unverifiedDuplicated, currentitem, items[a], unverifiedItemsCount, out unverifiedItemsCount);
+                                    unverifiedDuplicated = AddToDictionary(unverifiedDuplicated, currentitem, items[a], unverifiedItemsCount, out unverifiedItemsCount);
                                     countUnverified++;
                                 }
                             }
                             else
                             {
-                                unverifiedDuplicated = AddValueToDictionary(unverifiedDuplicated, currentitem, items[a], unverifiedItemsCount, out unverifiedItemsCount);
+                                unverifiedDuplicated = AddToDictionary(unverifiedDuplicated, currentitem, items[a], unverifiedItemsCount, out unverifiedItemsCount);
                                 countUnverified++;
                             }
                             filesList[(items[a].AttributeCount - 1)] = nullItem;
@@ -391,13 +385,13 @@ namespace WindowsFormsApplication1
                             }
                             else if (date != null && currentitem.CameraAndDateTaken == items[c].CameraAndDateTaken)
                             {
-                                verifiedDuplicated = AddValueToDictionary(verifiedDuplicated, currentitem, items[c], verifiedItemsCount, out verifiedItemsCount);
+                                verifiedDuplicated = AddToDictionary(verifiedDuplicated, currentitem, items[c], verifiedItemsCount, out verifiedItemsCount);
                                 duplicatesAmount++;
                                 allFilesSize += items[c].FileSize;
                             }
                             else
                             {
-                                unverifiedDuplicated = AddValueToDictionary(unverifiedDuplicated, currentitem, items[c], unverifiedItemsCount, out unverifiedItemsCount);
+                                unverifiedDuplicated = AddToDictionary(unverifiedDuplicated, currentitem, items[c], unverifiedItemsCount, out unverifiedItemsCount);
                                 countUnverified++;
                             }
                             filesList[(items[c].AttributeCount - 1)] = nullItem;
@@ -412,7 +406,7 @@ namespace WindowsFormsApplication1
                                 e.Cancel = true;
                                 break;
                             }
-                            unverifiedDuplicated = AddValueToDictionary(unverifiedDuplicated, currentitem, items[d], unverifiedItemsCount, out unverifiedItemsCount);
+                            unverifiedDuplicated = AddToDictionary(unverifiedDuplicated, currentitem, items[d], unverifiedItemsCount, out unverifiedItemsCount);
                             filesList[(items[d].AttributeCount - 1)] = nullItem;
                             countUnverified++;
                         }
@@ -420,7 +414,6 @@ namespace WindowsFormsApplication1
                 }
                 filesAmount++;
                 processedPercentage = PercentageReportProgress(filesListCount, processedPercentage, ref filesAmount);
-                //filesAmount = updatedcount;
             }
             if (unverifiedDuplicated.Count > 0)
             {
@@ -432,7 +425,6 @@ namespace WindowsFormsApplication1
         public int PercentageReportProgress(int totalAmount, int processedPercentage, ref int count)
         {
             int Percent;
-            //newCount = count;
 
             if (totalAmount >= 100)
             {
@@ -446,7 +438,6 @@ namespace WindowsFormsApplication1
                     }
 
                     bgWorker.ReportProgress(processedPercentage, null);
-                    //Thread.Sleep(100);
                     count = 0;
                 }
             }
@@ -460,15 +451,14 @@ namespace WindowsFormsApplication1
                 }
 
                 bgWorker.ReportProgress(processedPercentage, null);
-                //Thread.Sleep(100);
             }
 
             return processedPercentage;
         }
 
-        public Dictionary<ItemInformation, List<ItemInformation>> BytesComparison(Dictionary<ItemInformation, List<ItemInformation>> filesToVerify, DoWorkEventArgs e, int countItems)
+        public Dictionary<ItemInfo, List<ItemInfo>> BytesComparison(Dictionary<ItemInfo, List<ItemInfo>> filesToVerify, DoWorkEventArgs e, int countItems)
         {
-            ItemInformation key;
+            ItemInfo key;
             bool byteEquality;
             int count;
             int percent;
@@ -478,10 +468,10 @@ namespace WindowsFormsApplication1
             percent = 0;
             processedPercent = 0;
 
-            foreach (KeyValuePair<ItemInformation, List<ItemInformation>> dictionaryItem in filesToVerify)
+            foreach (KeyValuePair<ItemInfo, List<ItemInfo>> dictionaryItem in filesToVerify)
             {
                 key = dictionaryItem.Key;
-                foreach (ItemInformation entry in dictionaryItem.Value)
+                foreach (ItemInfo entry in dictionaryItem.Value)
                 {
                     byteEquality = FilesEquality(new FileInfo(key.FullPath), new FileInfo(entry.FullPath), e);
                     if (bgWorker.CancellationPending == true)
@@ -491,7 +481,7 @@ namespace WindowsFormsApplication1
                     }
                     else if (byteEquality)
                     {
-                        verifiedDuplicated = AddValueToDictionary(verifiedDuplicated, key, entry, countItems, out countItems);
+                        verifiedDuplicated = AddToDictionary(verifiedDuplicated, key, entry, countItems, out countItems);
                         duplicatesAmount++;
                         allFilesSize += entry.FileSize;
                     }
@@ -556,18 +546,17 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Dictionary<ItemInformation, List<ItemInformation>> AddValueToDictionary(Dictionary<ItemInformation, List<ItemInformation>> dictionary, ItemInformation item1, ItemInformation item2, int keycount, out int newcount)
+        public Dictionary<ItemInfo, List<ItemInfo>> AddToDictionary(Dictionary<ItemInfo, List<ItemInfo>> dictionary, ItemInfo item1, ItemInfo item2, int keycount, out int newcount)
         {
-            List<ItemInformation> valueList;
+            List<ItemInfo> valueList;
             newcount = keycount;
 
             if (!dictionary.ContainsKey(item1))
             {
                 item1.AttributeCount = keycount;
-                dictionary.Add(item1, new List<ItemInformation> { item2 });
+                dictionary.Add(item1, new List<ItemInfo> { item2 });
                 keycount++;
                 newcount = keycount;
-                //dictionary[item1].Add(item2);
             }
             else
             {
@@ -591,7 +580,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public string SizeConverter(double totalSize)
+        public string ConvertSize(double totalSize)
         {
             double byteEquivalent;
             string lengthType;
@@ -627,7 +616,7 @@ namespace WindowsFormsApplication1
         {
             string line = (string)e.UserState;
 
-            progressBar1.Value = e.ProgressPercentage;
+            progressBar.Value = e.ProgressPercentage;
             labelForPercentage.Text = "Percentage completed - " + e.ProgressPercentage.ToString() + "%";
 
             if (e.ProgressPercentage == 0)
@@ -655,11 +644,11 @@ namespace WindowsFormsApplication1
                 else
                 {
                     labelForPercentage.Text = COMPLETEDPERCENTAGE;
-                    progressBar1.Value = 100;
+                    progressBar.Value = 100;
                     MessageBox.Show("No duplicated files identified in the selected folder.");
                 }
                 textBoxForInfo.Clear();
-                checkedListBoxForResult.Items.Clear();
+                ResultCheckedListBox.Items.Clear();
             }
             else
             {
@@ -668,11 +657,14 @@ namespace WindowsFormsApplication1
                 textBoxDuplicatesInfo.Enabled = true;
                 textBoxForInfo.ReadOnly = true;
                 textBoxDuplicatesInfo.ReadOnly = true;
+
                 textBoxForInfo.Text = "Number of duplicates - " + duplicatesAmount + ";    Time spent - " + time + Environment.NewLine;
-                textBoxForInfo.AppendText("Total size of identified duplicated files - " + SizeConverter((double)allFilesSize));
+                textBoxForInfo.AppendText("Total size of identified duplicated files - " + ConvertSize((double)allFilesSize));
+
                 textBoxForInfo.BackColor = Color.LightGoldenrodYellow;
                 textBoxDuplicatesInfo.BackColor = Color.LightGoldenrodYellow;
                 labelForPercentage.Text = COMPLETEDPERCENTAGE;
+
                 MessageBox.Show("Processing has finished");
             }
             buttonGetInfo.Enabled = true;
@@ -680,7 +672,8 @@ namespace WindowsFormsApplication1
             buttonCancel.Enabled = false;
             comboBox1.Enabled = true;
             textBoxForPath.Enabled = true;
-            progressBar1.Value = 0;
+
+            progressBar.Value = 0;
             labelForPercentage.Text = String.Empty;
         }
 
@@ -705,13 +698,13 @@ namespace WindowsFormsApplication1
 
         private void OnDeleteButtonClick(object sender, EventArgs e)
         {
-            List<ItemInformation> valueForDictionary;
+            List<ItemInfo> valueForDictionary;
             Point newpoint;
             int heightOfPicture;
 
-            for (int i = checkedListBoxForResult.Items.Count - 1; i >= 0; i--)
+            for (int i = ResultCheckedListBox.Items.Count - 1; i >= 0; i--)
             {
-                if (checkedListBoxForResult.GetItemChecked(i))
+                if (ResultCheckedListBox.GetItemChecked(i))
                 {
                     try
                     {
@@ -724,9 +717,11 @@ namespace WindowsFormsApplication1
                                     pictureboxSet[a].Image.Dispose();
                                     splitContainer1.Panel2.Controls.Remove(pictureboxSet[a]);
                                     splitContainer1.Panel2.Controls.Remove(checkboxSet[i]);
+
                                     if (a != (pictureboxSet.Count - 1))
                                     {
                                         heightOfPicture = pictureboxSet[a].Size.Height;
+
                                         for (int b = (a + 1); b < pictureboxSet.Count; b++)
                                         {
                                             newpoint = pictureboxSet[b].Location;
@@ -744,8 +739,9 @@ namespace WindowsFormsApplication1
                             pictureboxSet.RemoveAt(i + 1);
                             checkboxSet.RemoveAt(i);
                         }
-                        File.Delete(checkedListBoxForResult.Items[i].ToString());
-                        checkedListBoxForResult.Items.RemoveAt(i);
+
+                        File.Delete(ResultCheckedListBox.Items[i].ToString());
+                        ResultCheckedListBox.Items.RemoveAt(i);
                         duplicates.TryGetValue(duplicates.Keys.ElementAt(listBox1.SelectedIndex), out valueForDictionary);
                         valueForDictionary.RemoveAt(i);
                     }
@@ -759,12 +755,14 @@ namespace WindowsFormsApplication1
             {
                 label4.Text = String.Empty;
             }
-            if (checkedListBoxForResult.Items.Count == 0)
+            if (ResultCheckedListBox.Items.Count == 0)
             {
                 buttonSelectAll.Enabled = false;
             }
+
             buttonDelete.Enabled = false;
             buttonselectNone.Enabled = false;
+
             textBoxDuplicatesInfo.Clear();
             sizeofDuplicates = 0;
         }
@@ -779,18 +777,18 @@ namespace WindowsFormsApplication1
 
         private void OnSelectAllButtonClick(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBoxForResult.Items.Count; i++)
+            for (int i = 0; i < ResultCheckedListBox.Items.Count; i++)
             {
-                checkedListBoxForResult.SetItemCheckState(i, CheckState.Checked);
+                ResultCheckedListBox.SetItemCheckState(i, CheckState.Checked);
             }
             buttonSelectAll.Enabled = false;
         }
 
         private void OnSelectNoneButtonClick(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBoxForResult.Items.Count; i++)
+            for (int i = 0; i < ResultCheckedListBox.Items.Count; i++)
             {
-                checkedListBoxForResult.SetItemCheckState(i, CheckState.Unchecked);
+                ResultCheckedListBox.SetItemCheckState(i, CheckState.Unchecked);
             }
             buttonselectNone.Enabled = false;
         }
@@ -801,9 +799,9 @@ namespace WindowsFormsApplication1
 
             extension = comboBox1.SelectedItem.ToString();
 
-            if (extension.Equals("All Picture Files"))
+            if (extension.Equals("All Image Files"))
             {
-                split = PICTUREEXTENSIONS.ToList();
+                split = IMAGEEXTENSIONS.ToList();
             }
             else
             {
@@ -816,14 +814,14 @@ namespace WindowsFormsApplication1
         {
             int duplicatesAmount;
 
-            ItemInformation selectedkey;
-            List<ItemInformation> valueList;
+            ItemInfo selectedkey;
+            List<ItemInfo> valueList;
 
             sizeofDuplicates = 0;
             duplicatesAmount = 0;
             selectedkey = null;
             textBoxDuplicatesInfo.Clear();
-            checkedListBoxForResult.Items.Clear();
+            ResultCheckedListBox.Items.Clear();
             checkboxSet.Clear();
             buttonDelete.Enabled = false;
             buttonselectNone.Enabled = false;
@@ -866,10 +864,10 @@ namespace WindowsFormsApplication1
                 {
                     buttonSelectAll.Enabled = true;
 
-                    foreach (ItemInformation entry in valueList)
+                    foreach (ItemInfo entry in valueList)
                     {
                         duplicatesAmount = valueList.Count;
-                        checkedListBoxForResult.Items.Add(entry.FullPath);
+                        ResultCheckedListBox.Items.Add(entry.FullPath);
                     }
                 }
 
@@ -896,7 +894,8 @@ namespace WindowsFormsApplication1
             string filePreviewExtension;
 
             filePreviewExtension = String.Concat("*", Path.GetExtension(filename).ToLower());
-            if (Array.IndexOf(PICTUREEXTENSIONS, filePreviewExtension) != -1)
+
+            if (Array.IndexOf(IMAGEEXTENSIONS, filePreviewExtension) != -1)
             {
                 checkboxSet = new List<CheckBox>();
                 label = new Label();
@@ -917,14 +916,14 @@ namespace WindowsFormsApplication1
                     splitContainer1.Panel2.Controls.Add(label);
                     splitContainer1.Panel2.Controls.Add(picturebox);
 
-                    for (int n = 0; n < checkedListBoxForResult.Items.Count; n++)
+                    for (int n = 0; n < ResultCheckedListBox.Items.Count; n++)
                     {
                         checkbox = new CheckBox();
                         checkboxSet.Add(checkbox);
                         picturebox2 = new PictureBox();
 
                         picturebox2.Size = size;
-                        picturebox2.Image = Image.FromFile(checkedListBoxForResult.Items[n].ToString());
+                        picturebox2.Image = Image.FromFile(ResultCheckedListBox.Items[n].ToString());
 
                         height = pictureboxSet[pictureboxSet.Count - 1].Location.Y + size.Height + INTERVAL;
                         pictureboxSet.Add(picturebox2);
@@ -959,11 +958,11 @@ namespace WindowsFormsApplication1
 
             if (checkbox.Checked == true)
             {
-                checkedListBoxForResult.SetItemCheckState(checkboxSet.IndexOf(checkbox), CheckState.Checked);
+                ResultCheckedListBox.SetItemCheckState(checkboxSet.IndexOf(checkbox), CheckState.Checked);
             }
             else
             {
-                checkedListBoxForResult.SetItemCheckState(checkboxSet.IndexOf(checkbox), CheckState.Unchecked);
+                ResultCheckedListBox.SetItemCheckState(checkboxSet.IndexOf(checkbox), CheckState.Unchecked);
             }
         }
 
@@ -984,12 +983,12 @@ namespace WindowsFormsApplication1
             size = new Size(550, 550);
             string filePath;
 
-            filePath = checkedListBoxForResult.SelectedItem.ToString();
+            filePath = ResultCheckedListBox.SelectedItem.ToString();
 
-            if (checkedListBoxForResult.Items.Count > 0 && checkedListBoxForResult.SelectedItem != null)
+            if (ResultCheckedListBox.Items.Count > 0 && ResultCheckedListBox.SelectedItem != null)
             {
-                ext = Path.GetExtension(checkedListBoxForResult.SelectedItem.ToString()).ToLower();
-                if (Array.IndexOf(PICTUREEXTENSIONS, ext) != -1)
+                ext = Path.GetExtension(ResultCheckedListBox.SelectedItem.ToString()).ToLower();
+                if (Array.IndexOf(IMAGEEXTENSIONS, ext) != -1)
                 {
                     form2 = new Form();
                     form2.MinimumSize = size;
@@ -1020,13 +1019,14 @@ namespace WindowsFormsApplication1
                     Process.Start("rundll32.exe", "shell32.dll, OpenAs_RunDLL " + filePath);
                 }
             }
-            checkedListBoxForResult.SelectedItem = null;
+            ResultCheckedListBox.SelectedItem = null;
         }
 
         private void OnItemCheck(object sender, ItemCheckEventArgs e)
         {
             long fileSizeInfo;
-            List<ItemInformation> valueDictionary;
+            long value = 0;
+            List<ItemInfo> valueDictionary;
 
             fileSizeInfo = 0;
             textBoxDuplicatesInfo.Clear();
@@ -1039,24 +1039,37 @@ namespace WindowsFormsApplication1
                 buttonselectNone.Enabled = true;
 
                 sizeofDuplicates += fileSizeInfo;
+                
                 if (checkboxSet.Count > 0)
                 {
                     checkboxSet[e.Index].Checked = true;
-                }
+                } 
             }
             else if (e.CurrentValue == CheckState.Checked && e.NewValue != CheckState.Checked)
             {
                 buttonSelectAll.Enabled = true;
 
                 sizeofDuplicates = sizeofDuplicates - fileSizeInfo;
+                
                 if (checkboxSet.Count > 0)
                 {
                     checkboxSet[e.Index].Checked = false;
                 }
             }
+
+            for (int i = 0; i < valueDictionary.Count; i++)
+            {
+                value += valueDictionary[i].FileSize;
+            }
+
+            if (sizeofDuplicates == value)
+            {
+                buttonSelectAll.Enabled = false;
+            }
+
             if (sizeofDuplicates > 0)
             {
-                textBoxDuplicatesInfo.AppendText("Size of selected file(s) - " + SizeConverter((double)sizeofDuplicates));
+                textBoxDuplicatesInfo.AppendText("Size of selected file(s) - " + ConvertSize((double)sizeofDuplicates));
                 buttonDelete.Enabled = true;
             }
             else

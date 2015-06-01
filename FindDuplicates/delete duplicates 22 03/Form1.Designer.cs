@@ -36,10 +36,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.checkedListBoxForResult = new System.Windows.Forms.CheckedListBox();
+            this.ResultCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.buttonSelectAll = new System.Windows.Forms.Button();
             this.buttonselectNone = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.textBoxDuplicatesInfo = new System.Windows.Forms.TextBox();
@@ -69,7 +69,6 @@
             this.textBoxForPath.Name = "textBoxForPath";
             this.textBoxForPath.Size = new System.Drawing.Size(225, 20);
             this.textBoxForPath.TabIndex = 0;
-            this.textBoxForPath.Text = "C:\\Users\\Anna\\Desktop\\Example\\New folder";
             // 
             // textBoxForInfo
             // 
@@ -126,7 +125,7 @@
             // 
             this.buttonDelete.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonDelete.Enabled = false;
-            this.buttonDelete.Location = new System.Drawing.Point(220, 309);
+            this.buttonDelete.Location = new System.Drawing.Point(222, 309);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 32);
             this.buttonDelete.TabIndex = 9;
@@ -136,24 +135,24 @@
             // 
             // checkedListBoxForResult
             // 
-            this.checkedListBoxForResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.ResultCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBoxForResult.CheckOnClick = true;
-            this.checkedListBoxForResult.FormattingEnabled = true;
-            this.checkedListBoxForResult.HorizontalScrollbar = true;
-            this.checkedListBoxForResult.IntegralHeight = false;
-            this.checkedListBoxForResult.Location = new System.Drawing.Point(4, 201);
-            this.checkedListBoxForResult.Name = "checkedListBoxForResult";
-            this.checkedListBoxForResult.Size = new System.Drawing.Size(357, 102);
-            this.checkedListBoxForResult.TabIndex = 11;
-            this.checkedListBoxForResult.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnItemCheck);
-            this.checkedListBoxForResult.DoubleClick += new System.EventHandler(this.OntemDoubleClick);
+            this.ResultCheckedListBox.CheckOnClick = true;
+            this.ResultCheckedListBox.FormattingEnabled = true;
+            this.ResultCheckedListBox.HorizontalScrollbar = true;
+            this.ResultCheckedListBox.IntegralHeight = false;
+            this.ResultCheckedListBox.Location = new System.Drawing.Point(4, 201);
+            this.ResultCheckedListBox.Name = "checkedListBoxForResult";
+            this.ResultCheckedListBox.Size = new System.Drawing.Size(361, 102);
+            this.ResultCheckedListBox.TabIndex = 11;
+            this.ResultCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnItemCheck);
+            this.ResultCheckedListBox.DoubleClick += new System.EventHandler(this.OntemDoubleClick);
             // 
             // buttonSelectAll
             // 
             this.buttonSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonSelectAll.Enabled = false;
-            this.buttonSelectAll.Location = new System.Drawing.Point(139, 309);
+            this.buttonSelectAll.Location = new System.Drawing.Point(141, 309);
             this.buttonSelectAll.Name = "buttonSelectAll";
             this.buttonSelectAll.Size = new System.Drawing.Size(75, 32);
             this.buttonSelectAll.TabIndex = 12;
@@ -165,7 +164,7 @@
             // 
             this.buttonselectNone.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonselectNone.Enabled = false;
-            this.buttonselectNone.Location = new System.Drawing.Point(58, 309);
+            this.buttonselectNone.Location = new System.Drawing.Point(60, 309);
             this.buttonselectNone.Name = "buttonselectNone";
             this.buttonselectNone.Size = new System.Drawing.Size(75, 32);
             this.buttonselectNone.TabIndex = 13;
@@ -175,21 +174,21 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(12, 434);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(715, 23);
-            this.progressBar1.TabIndex = 14;
+            this.progressBar.Location = new System.Drawing.Point(12, 434);
+            this.progressBar.Name = "progressBar1";
+            this.progressBar.Size = new System.Drawing.Size(715, 23);
+            this.progressBar.TabIndex = 14;
             // 
             // comboBox1
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "All files (*)",
-            "All Picture Files",
-            "Bitmap files (*.bmp)",
+            "All Files (*)",
+            "All Image Files",
+            "Bitmap Files (*.bmp)",
             "JPEG (*.jpg, *.jpeg)",
             "GIF (*.gif)",
             "PNG (*.png)",
@@ -210,7 +209,7 @@
             this.listBox1.IntegralHeight = false;
             this.listBox1.Location = new System.Drawing.Point(6, 21);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(357, 136);
+            this.listBox1.Size = new System.Drawing.Size(361, 136);
             this.listBox1.TabIndex = 16;
             this.listBox1.SelectedValueChanged += new System.EventHandler(this.OnSelectedValueChanged);
             // 
@@ -252,7 +251,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.buttonDelete);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.listBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.checkedListBoxForResult);
+            this.splitContainer1.Panel1.Controls.Add(this.ResultCheckedListBox);
             this.splitContainer1.Panel1.Controls.Add(this.buttonselectNone);
             this.splitContainer1.Panel1.Controls.Add(this.buttonSelectAll);
             // 
@@ -261,7 +260,7 @@
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.splitContainer1.Size = new System.Drawing.Size(715, 344);
-            this.splitContainer1.SplitterDistance = 370;
+            this.splitContainer1.SplitterDistance = 374;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 22;
             // 
@@ -269,7 +268,7 @@
             // 
             this.buttonPrevious.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonPrevious.Enabled = false;
-            this.buttonPrevious.Location = new System.Drawing.Point(181, 163);
+            this.buttonPrevious.Location = new System.Drawing.Point(183, 163);
             this.buttonPrevious.Name = "buttonPrevious";
             this.buttonPrevious.Size = new System.Drawing.Size(75, 32);
             this.buttonPrevious.TabIndex = 18;
@@ -281,7 +280,7 @@
             // 
             this.buttonNext.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonNext.Enabled = false;
-            this.buttonNext.Location = new System.Drawing.Point(100, 163);
+            this.buttonNext.Location = new System.Drawing.Point(102, 163);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(75, 32);
             this.buttonNext.TabIndex = 17;
@@ -308,7 +307,7 @@
             this.Controls.Add(this.textBoxForInfo);
             this.Controls.Add(this.labelForPercentage);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.buttonBrowseFolder);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.buttonCancel);
@@ -339,10 +338,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.CheckedListBox checkedListBoxForResult;
+        private System.Windows.Forms.CheckedListBox ResultCheckedListBox;
         private System.Windows.Forms.Button buttonSelectAll;
         private System.Windows.Forms.Button buttonselectNone;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TextBox textBoxDuplicatesInfo;
